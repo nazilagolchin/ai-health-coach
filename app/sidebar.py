@@ -73,7 +73,7 @@ def _show_disclaimer() -> None:
 
 
 def _show_footer() -> None:
-    st.caption("Built with LangChain · ChromaDB · OpenAI · Streamlit")
+    st.caption("Built with LangChain · ChromaDB · Anthropic Claude · Streamlit")
 
 
 def _short_diet(dietary_preference: str) -> str:

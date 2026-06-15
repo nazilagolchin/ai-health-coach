@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        "About": "AI Health Coach built with LangChain, ChromaDB, and OpenAI. General wellness coaching only — not a medical service.",
+        "About": "AI Health Coach built with LangChain, ChromaDB, and Anthropic Claude. General wellness coaching only — not a medical service.",
     },
 )
 
@@ -34,14 +34,14 @@ def _load_knowledge_base() -> HealthKnowledgeBase:
 
 
 def _validate_api_key() -> bool:
-    api_key = os.getenv("OPENAI_API_KEY", "")
-    if not api_key or api_key.startswith("sk-your-"):
+    api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    if not api_key or api_key.startswith("sk-ant-your-"):
         st.error(
-            "**OpenAI API key not configured.**\n\n"
+            "**Anthropic API key not configured.**\n\n"
             "1. Copy `.env.example` to `.env`\n"
-            "2. Add your OpenAI API key\n"
+            "2. Add your Anthropic API key\n"
             "3. Restart the app\n\n"
-            "Get your key at [platform.openai.com](https://platform.openai.com/api-keys)",
+            "Get your key at [console.anthropic.com](https://console.anthropic.com/settings/keys)",
             icon="🔑",
         )
         return False

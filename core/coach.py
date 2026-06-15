@@ -1,6 +1,6 @@
 import os
 from typing import Generator
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from core.prompts import (
     HEALTH_COACH_SYSTEM_PROMPT,
@@ -17,8 +17,8 @@ class HealthCoach:
 
     def __init__(self, knowledge_base: HealthKnowledgeBase):
         self.kb = knowledge_base
-        self.llm = ChatOpenAI(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        self.llm = ChatAnthropic(
+            model=os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5"),
             temperature=0.7,
             streaming=True,
         )
@@ -72,8 +72,8 @@ class HealthCoach:
             goal=profile.goal,
             dietary_preference=profile.dietary_preference,
         )
-        llm_non_stream = ChatOpenAI(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        llm_non_stream = ChatAnthropic(
+            model=os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5"),
             temperature=0.7,
         )
         response = llm_non_stream.invoke([HumanMessage(content=prompt)])
@@ -86,8 +86,8 @@ class HealthCoach:
             dietary_preference=profile.dietary_preference,
             goal=profile.goal,
         )
-        llm_non_stream = ChatOpenAI(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        llm_non_stream = ChatAnthropic(
+            model=os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5"),
             temperature=0.7,
         )
         response = llm_non_stream.invoke([HumanMessage(content=prompt)])

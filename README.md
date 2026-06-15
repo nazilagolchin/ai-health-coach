@@ -1,6 +1,6 @@
 # AI Health Coach — Maya
 
-A conversational AI wellness coaching assistant built with Python, Streamlit, LangChain, ChromaDB, and OpenAI.
+A conversational AI wellness coaching assistant built with Python, Streamlit, LangChain, ChromaDB, and Anthropic Claude.
 
 > **Disclaimer:** This app provides general wellness and lifestyle coaching only.
 > It is **not** a medical service and does not diagnose, treat, or replace professional healthcare.
@@ -37,7 +37,7 @@ Maya is an AI-powered health coach that helps users build healthier habits throu
                      │     └─ emergency? → 911 redirect    │
                      │  2. RAG Retrieval (core/rag.py)     │
                      │     └─ ChromaDB similarity search   │
-                     │  3. LLM Call (ChatOpenAI)           │
+                     │  3. LLM Call (ChatAnthropic)        │
                      │     └─ system prompt + user profile │
                      │        + RAG context + history      │
                      └─────────────────────────────────────┘
@@ -45,8 +45,8 @@ Maya is an AI-powered health coach that helps users build healthier habits throu
                      ┌────────────────┴────────────────────┐
                      │                                     │
               ┌──────▼──────┐                  ┌──────────▼──────┐
-              │  ChromaDB   │                  │   OpenAI API    │
-              │  (local)    │                  │  gpt-4o-mini    │
+              │  ChromaDB   │                  │  Anthropic API  │
+              │  (local)    │                  │ claude-haiku-4-5│
               │  data/      │                  └─────────────────┘
               │  chroma_db/ │
               └─────────────┘
@@ -138,14 +138,15 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Edit `.env` and add your OpenAI API key:
+Edit `.env` and add your Anthropic API key:
 
 ```
-OPENAI_API_KEY=sk-your-actual-key-here
-OPENAI_MODEL=gpt-4o-mini
+ANTHROPIC_API_KEY=sk-ant-your-actual-key-here
+ANTHROPIC_MODEL=claude-haiku-4-5
 ```
 
-> `gpt-4o-mini` is recommended for portfolio/demo use — it's cost-effective and high quality.
+> `claude-haiku-4-5` is recommended for portfolio/demo use — it's fast and cost-effective.
+> Upgrade to `claude-sonnet-4-6` or `claude-opus-4-8` for higher quality responses.
 
 ### 5. Run the app
 
@@ -163,9 +164,9 @@ Subsequent launches load from the persisted ChromaDB.
 | Layer | Technology |
 |---|---|
 | UI | Streamlit |
-| LLM | OpenAI GPT-4o-mini via LangChain |
+| LLM | Anthropic Claude (Haiku/Sonnet/Opus) via LangChain |
 | RAG | LangChain + ChromaDB |
-| Embeddings | OpenAI text-embedding-3-small |
+| Embeddings | HuggingFace all-MiniLM-L6-v2 (local, free) |
 | User persistence | SQLite |
 | Environment | python-dotenv |
 
@@ -190,11 +191,13 @@ Add any `.md` or `.txt` files to `data/knowledge/`. Delete `data/chroma_db/` to 
 
 ## Screenshots
 
-_Add screenshots here once the app is running_
+| Onboarding | Coaching Conversation |
+|---|---|
+| ![Onboarding](screenshots/healthcoach-onboarding.png) | ![Conversation](screenshots/healthcoach-conversation.png) |
 
-| Onboarding | Chat | Wellness Plan |
-|---|---|---|
-| ![onboarding](screenshots/onboarding.png) | ![chat](screenshots/chat.png) | ![plan](screenshots/plan.png) |
+| 7-Day Wellness Plan | Safety Guardrail |
+|---|---|
+| ![Wellness Plan](screenshots/healthcoach-wellness-plan.png) | ![Safety](screenshots/healthcoach-safety.png) |
 
 ---
 

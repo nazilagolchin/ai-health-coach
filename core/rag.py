@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
 
@@ -15,8 +15,8 @@ class HealthKnowledgeBase:
         self.collection_name = "health_coach_kb"
         self._vectorstore: Chroma | None = None
 
-    def _get_embeddings(self) -> OpenAIEmbeddings:
-        return OpenAIEmbeddings(model="text-embedding-3-small")
+    def _get_embeddings(self) -> HuggingFaceEmbeddings:
+        return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     def load(self) -> None:
         """Load from existing ChromaDB if available; otherwise build from documents."""
@@ -36,7 +36,7 @@ class HealthKnowledgeBase:
         # First run: load, chunk, embed, and persist
         self._build_index(embeddings)
 
-    def _build_index(self, embeddings: OpenAIEmbeddings) -> None:
+    def _build_index(self, embeddings: HuggingFaceEmbeddings) -> None:
         loader = DirectoryLoader(
             str(self.docs_dir),
             glob="**/*.md",
